@@ -7,6 +7,11 @@ const App: Component = () => {
     Array.from({ length: 8 }, () => Array(8).fill("blue"))
   );
 
+  function onClickCell(me: MouseEvent) {
+    const cell = me.target as HTMLElement;
+    cell.style.backgroundColor = "#aaddff";
+  }
+
   return (
     <div>
       <div class={styles["dot-canvas-grid"]}>
@@ -16,6 +21,7 @@ const App: Component = () => {
               <div
                 class={styles.cell}
                 style={{ "background-color": color }}
+                onclick={onClickCell}
               ></div>
             ))}
           </div>
