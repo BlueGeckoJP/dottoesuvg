@@ -1,0 +1,16 @@
+.dot-canvas-grid {
+  padding: 4px;
+  border: 1px solid black;
+  width: min-content;
+  height: min-content;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 32px;
+  height: 32px;
+  border: 1px solid grey;
+}

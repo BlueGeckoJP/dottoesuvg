@@ -1,3 +1,5 @@
+import styles from "./App.module.css";
+
 import { createSignal, type Component } from "solid-js";
 
 const App: Component = () => {
@@ -7,23 +9,13 @@ const App: Component = () => {
 
   return (
     <div>
-      <div id="dot-canvas-grid">
+      <div class={styles["dot-canvas-grid"]}>
         {colors().map((colorsRow) => (
-          <div
-            style={{
-              border: "1px solid #000000",
-              display: "flex",
-              padding: "4px",
-            }}
-          >
+          <div class={styles.row}>
             {colorsRow.map((color) => (
               <div
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  "background-color": color,
-                  border: "1px solid #000000",
-                }}
+                class={styles.cell}
+                style={{ "background-color": color }}
               ></div>
             ))}
           </div>
