@@ -7,6 +7,7 @@ const App: Component = () => {
     Array.from({ length: 8 }, () => Array(8).fill("blue"))
   );
   const [penColor, setPenColor] = createSignal("#000000");
+  const [recentColors, setRecentColors] = createSignal<string[]>(Array(3));
 
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
@@ -28,12 +29,29 @@ const App: Component = () => {
           </div>
         ))}
       </div>
-      <div>
+      <div class={styles["color-picker-container"]}>
         <input
           type="color"
           value={penColor()}
-          onchange={(e) => setPenColor(e.currentTarget.value)}
+          onchange={(e) => {
+            setPenColor(e.currentTarget.value);
+            setRecentColors(
+              [e.currentTarget.value].concat(recentColors().slice(0, 2))
+            );
+          }}
         />
+        <div
+          class={styles["recent-colors"]}
+          style={{ "background-color": recentColors()[0] }}
+        ></div>
+        <div
+          class={styles["recent-colors"]}
+          style={{ "background-color": recentColors()[1] }}
+        ></div>
+        <div
+          class={styles["recent-colors"]}
+          style={{ "background-color": recentColors()[2] }}
+        ></div>
       </div>
     </div>
   );
