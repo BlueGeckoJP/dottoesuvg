@@ -1,3 +1,7 @@
+.top-container {
+  display: flex;
+}
+
 .dot-canvas-grid {
   padding: 4px;
   border: 1px solid black;
