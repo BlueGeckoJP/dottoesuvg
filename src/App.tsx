@@ -2,23 +2,34 @@ import styles from "./App.module.css";
 
 import { createSignal, type Component } from "solid-js";
 
+type HexCode = `#${string}`;
+type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
+
+function isHexCode(hex: string): hex is HexCode {
+  return /^#[0-9A-F]{6}$/i.test(hex);
+}
+
+function isRGBA(rgba: string): rgba is RGBA {
+  return /^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, \d(\.\d)?\)$/.test(rgba);
+}
+
 const App: Component = () => {
-  const [colors, setColors] = createSignal<string[][]>(
+  const [colors, setColors] = createSignal<RGBA[][]>(
     Array.from({ length: 8 }, () => Array(8).fill("rgba(0, 0, 0, 0"))
   );
   const [alpha, setAlpha] = createSignal<number>(255);
-  const [penColor, setPenColor] = createSignal("#000000");
+  const [penColor, setPenColor] = createSignal<HexCode>("#000000");
   const [actuallyRGBA, setActuallyRGBA] =
-    createSignal<string>("rgba(0, 0, 0, 1)");
-  const [recentColors, setRecentColors] = createSignal<string[]>(Array(3));
+    createSignal<RGBA>("rgba(0, 0, 0, 1)");
+  const [recentColors, setRecentColors] = createSignal<RGBA[]>(Array(3));
 
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
     cell.style.backgroundColor = actuallyRGBA();
   }
 
-  function setRGBA(hexCode: string, alpha: number) {
-    const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexCode);
+  function setRGBA(hex: string, alpha: number) {
+    const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     const rgba = rgb
       ? `rgba(${parseInt(rgb[1], 16)}, ${parseInt(rgb[2], 16)}, ${parseInt(
           rgb[3],
@@ -26,13 +37,15 @@ const App: Component = () => {
         )}, ${Math.floor((alpha / 255) * 10) / 10})`
       : "rgba(0, 0, 0, 1)";
 
-    setPenColor(hexCode);
-    setActuallyRGBA(rgba);
-    setAlpha(alpha);
-    setRecentColors([rgba].concat(recentColors().slice(0, 2)));
+    if (isHexCode(hex) && isRGBA(rgba)) {
+      setPenColor(hex);
+      setActuallyRGBA(rgba);
+      setAlpha(alpha);
+      setRecentColors([rgba].concat(recentColors().slice(0, 2)));
 
-    console.log("penColor: ", penColor());
-    console.log("actuallyRGBA: ", actuallyRGBA());
+      console.log("penColor: ", penColor());
+      console.log("actuallyRGBA: ", actuallyRGBA());
+    }
   }
 
   return (
