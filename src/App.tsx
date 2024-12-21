@@ -6,6 +6,7 @@ const App: Component = () => {
   const [colors, setColors] = createSignal<string[][]>(
     Array.from({ length: 8 }, () => Array(8).fill("blue"))
   );
+  const [alpha, setAlpha] = createSignal<number>(255);
   const [penColor, setPenColor] = createSignal("#000000");
   const [recentColors, setRecentColors] = createSignal<string[]>(Array(3));
 
@@ -34,10 +35,31 @@ const App: Component = () => {
           type="color"
           value={penColor()}
           onchange={(e) => {
-            setPenColor(e.currentTarget.value);
-            setRecentColors(
-              [e.currentTarget.value].concat(recentColors().slice(0, 2))
+            const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+              e.currentTarget.value
             );
+            const rgba = rgb
+              ? `rgba(${parseInt(rgb[1], 16)}, ${parseInt(
+                  rgb[2],
+                  16
+                )}, ${parseInt(rgb[3], 16)}, ${
+                  Math.floor((alpha() / 255) * 10) / 10
+                })`
+              : "rgba(0, 0, 0, 1)";
+
+            setPenColor(rgba);
+            setRecentColors([rgba].concat(recentColors().slice(0, 2)));
+            console.log(rgba);
+          }}
+        />
+        <input
+          class={styles["alpha-slider"]}
+          type="range"
+          min="0"
+          max="255"
+          value={alpha()}
+          onchange={(e) => {
+            setAlpha(e.currentTarget.valueAsNumber);
           }}
         />
         <div

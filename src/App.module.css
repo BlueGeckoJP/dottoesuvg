@@ -28,3 +28,7 @@
   height: 32px;
   border: 1px solid black;
 }
+
+.alpha-slider {
+  height: min-content;
+}
