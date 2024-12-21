@@ -1,5 +1,3 @@
-// FIXME: change penColor to hex code
-
 import styles from "./App.module.css";
 
 import { createSignal, type Component } from "solid-js";
@@ -10,11 +8,13 @@ const App: Component = () => {
   );
   const [alpha, setAlpha] = createSignal<number>(255);
   const [penColor, setPenColor] = createSignal("#000000");
+  const [actuallyRGBA, setActuallyRGBA] =
+    createSignal<string>("rgba(0, 0, 0, 1)");
   const [recentColors, setRecentColors] = createSignal<string[]>(Array(3));
 
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
-    cell.style.backgroundColor = penColor();
+    cell.style.backgroundColor = actuallyRGBA();
   }
 
   function setRGBA(hexCode: string, alpha: number) {
@@ -26,11 +26,13 @@ const App: Component = () => {
         )}, ${Math.floor((alpha / 255) * 10) / 10})`
       : "rgba(0, 0, 0, 1)";
 
-    setPenColor(rgba);
+    setPenColor(hexCode);
+    setActuallyRGBA(rgba);
     setAlpha(alpha);
     setRecentColors([rgba].concat(recentColors().slice(0, 2)));
 
-    console.log(penColor());
+    console.log("penColor: ", penColor());
+    console.log("actuallyRGBA: ", actuallyRGBA());
   }
 
   return (
