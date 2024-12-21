@@ -1,3 +1,5 @@
+// FIXME: change penColor to hex code
+
 import styles from "./App.module.css";
 
 import { createSignal, type Component } from "solid-js";
@@ -13,6 +15,22 @@ const App: Component = () => {
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
     cell.style.backgroundColor = penColor();
+  }
+
+  function setRGBA(hexCode: string, alpha: number) {
+    const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexCode);
+    const rgba = rgb
+      ? `rgba(${parseInt(rgb[1], 16)}, ${parseInt(rgb[2], 16)}, ${parseInt(
+          rgb[3],
+          16
+        )}, ${Math.floor((alpha / 255) * 10) / 10})`
+      : "rgba(0, 0, 0, 1)";
+
+    setPenColor(rgba);
+    setAlpha(alpha);
+    setRecentColors([rgba].concat(recentColors().slice(0, 2)));
+
+    console.log(penColor());
   }
 
   return (
@@ -37,21 +55,7 @@ const App: Component = () => {
           type="color"
           value={penColor()}
           onchange={(e) => {
-            const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
-              e.currentTarget.value
-            );
-            const rgba = rgb
-              ? `rgba(${parseInt(rgb[1], 16)}, ${parseInt(
-                  rgb[2],
-                  16
-                )}, ${parseInt(rgb[3], 16)}, ${
-                  Math.floor((alpha() / 255) * 10) / 10
-                })`
-              : "rgba(0, 0, 0, 1)";
-
-            setPenColor(rgba);
-            setRecentColors([rgba].concat(recentColors().slice(0, 2)));
-            console.log(rgba);
+            setRGBA(e.currentTarget.value, alpha());
           }}
         />
         <input
@@ -61,7 +65,7 @@ const App: Component = () => {
           max="255"
           value={alpha()}
           onchange={(e) => {
-            setAlpha(e.currentTarget.valueAsNumber);
+            setRGBA(penColor(), e.currentTarget.valueAsNumber);
           }}
         />
         <div
