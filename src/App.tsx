@@ -4,7 +4,7 @@ import { createSignal, type Component } from "solid-js";
 
 const App: Component = () => {
   const [colors, setColors] = createSignal<string[][]>(
-    Array.from({ length: 8 }, () => Array(8).fill("blue"))
+    Array.from({ length: 8 }, () => Array(8).fill("rgba(0, 0, 0, 0"))
   );
   const [alpha, setAlpha] = createSignal<number>(255);
   const [penColor, setPenColor] = createSignal("#000000");
@@ -17,7 +17,9 @@ const App: Component = () => {
 
   return (
     <div class={styles["top-container"]}>
-      <div class={styles["dot-canvas-grid"]}>
+      <div
+        class={`${styles["dot-canvas-grid"]} ${styles["checkered-background"]}`}
+      >
         {colors().map((colorsRow) => (
           <div class={styles.row}>
             {colorsRow.map((color) => (
