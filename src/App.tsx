@@ -50,20 +50,22 @@ const App: Component = () => {
 
   return (
     <div class={styles["top-container"]}>
-      <div
-        class={`${styles["dot-canvas-grid"]} ${styles["checkered-background"]}`}
-      >
-        {colors().map((colorsRow) => (
-          <div class={styles.row}>
-            {colorsRow.map((color) => (
-              <div
-                class={styles.cell}
-                style={{ "background-color": color }}
-                onclick={onClickCell}
-              ></div>
-            ))}
-          </div>
-        ))}
+      <div class={styles["dot-canvas-container"]}>
+        <div
+          class={`${styles["dot-canvas-grid"]} ${styles["checkered-background"]}`}
+        >
+          {colors().map((colorsRow) => (
+            <div class={styles.row}>
+              {colorsRow.map((color) => (
+                <div
+                  class={styles.cell}
+                  style={{ "background-color": color }}
+                  onclick={onClickCell}
+                ></div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
       <div class={styles["color-picker-container"]}>
         <input
