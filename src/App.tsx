@@ -2,6 +2,8 @@ import styles from "./App.module.css";
 
 import { createSignal, type Component } from "solid-js";
 
+import ColorPicker from "./components/ColorPicker";
+
 type HexCode = `#${string}`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 
@@ -97,6 +99,7 @@ const App: Component = () => {
           class={styles["recent-colors"]}
           style={{ "background-color": recentColors()[2] }}
         ></div>
+        <ColorPicker />
       </div>
     </div>
   );
