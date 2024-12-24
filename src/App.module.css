@@ -23,17 +23,19 @@
 }
 
 .color-picker-container {
-  display: flex;
-  justify-content: center;
+  margin-top: 16px;
   padding: 8px;
   width: 50%;
-  background-color: #888888;
 }
 
 .recent-colors {
   width: 32px;
   height: 32px;
   border: 1px solid black;
+}
+
+.recent-colors-container {
+  display: flex;
 }
 
 .alpha-slider {
@@ -61,7 +63,6 @@
 }
 
 .dot-canvas-container {
-  background-color: #888888;
   padding: 8px;
   display: flex;
   justify-content: center;

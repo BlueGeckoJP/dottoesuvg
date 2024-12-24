@@ -54,21 +54,29 @@ const App: Component = () => {
       </div>
       <div class={styles["color-picker-container"]}>
         <ColorPicker penColor={penColor} setPenColor={setPenColor} />
-        <div
-          class={styles["recent-colors"]}
-          style={{ "background-color": convertToRGBAString(recentColors()[0]) }}
-          onclick={() => setPenColor(recentColors()[0])}
-        ></div>
-        <div
-          class={styles["recent-colors"]}
-          style={{ "background-color": convertToRGBAString(recentColors()[1]) }}
-          onclick={() => setPenColor(recentColors()[1])}
-        ></div>
-        <div
-          class={styles["recent-colors"]}
-          style={{ "background-color": convertToRGBAString(recentColors()[2]) }}
-          onclick={() => setPenColor(recentColors()[2])}
-        ></div>
+        <div class={styles["recent-colors-container"]}>
+          <div
+            class={styles["recent-colors"]}
+            style={{
+              "background-color": convertToRGBAString(recentColors()[0]),
+            }}
+            onclick={() => setPenColor(recentColors()[0])}
+          ></div>
+          <div
+            class={styles["recent-colors"]}
+            style={{
+              "background-color": convertToRGBAString(recentColors()[1]),
+            }}
+            onclick={() => setPenColor(recentColors()[1])}
+          ></div>
+          <div
+            class={styles["recent-colors"]}
+            style={{
+              "background-color": convertToRGBAString(recentColors()[2]),
+            }}
+            onclick={() => setPenColor(recentColors()[2])}
+          ></div>
+        </div>
       </div>
     </div>
   );
