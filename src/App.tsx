@@ -16,6 +16,10 @@ const App: Component = () => {
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
     cell.style.backgroundColor = penColor();
+
+    if (penColor() !== recentColors()[0]) {
+      setRecentColors([penColor(), recentColors()[0], recentColors()[1]]);
+    }
   }
 
   return (
