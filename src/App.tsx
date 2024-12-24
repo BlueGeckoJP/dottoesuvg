@@ -1,21 +1,32 @@
 import styles from "./App.module.css";
 
+import type { RGBA, RGBAString } from "./types";
+
 import { createSignal, type Component } from "solid-js";
 
 import ColorPicker from "./components/ColorPicker";
 
-type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
-
 const App: Component = () => {
-  const [colors, setColors] = createSignal<RGBA[][]>(
+  const [colors, setColors] = createSignal<RGBAString[][]>(
     Array.from({ length: 8 }, () => Array(8).fill("rgba(0, 0, 0, 0"))
   );
-  const [penColor, setPenColor] = createSignal<RGBA>("rgba(0, 0, 0, 1)");
-  const [recentColors, setRecentColors] = createSignal<RGBA[]>(Array(3));
+  const [penColor, setPenColor] = createSignal<RGBA>({
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 1,
+  });
+  const [recentColors, setRecentColors] = createSignal<RGBA[]>(
+    Array(3).fill({ r: 0, g: 0, b: 0, a: 0 })
+  );
+
+  function convertToRGBAString(rgba: RGBA): RGBAString {
+    return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+  }
 
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
-    cell.style.backgroundColor = penColor();
+    cell.style.backgroundColor = convertToRGBAString(penColor());
 
     if (penColor() !== recentColors()[0]) {
       setRecentColors([penColor(), recentColors()[0], recentColors()[1]]);
@@ -45,15 +56,15 @@ const App: Component = () => {
         <ColorPicker penColor={penColor} setPenColor={setPenColor} />
         <div
           class={styles["recent-colors"]}
-          style={{ "background-color": recentColors()[0] }}
+          style={{ "background-color": convertToRGBAString(recentColors()[0]) }}
         ></div>
         <div
           class={styles["recent-colors"]}
-          style={{ "background-color": recentColors()[1] }}
+          style={{ "background-color": convertToRGBAString(recentColors()[1]) }}
         ></div>
         <div
           class={styles["recent-colors"]}
-          style={{ "background-color": recentColors()[2] }}
+          style={{ "background-color": convertToRGBAString(recentColors()[2]) }}
         ></div>
       </div>
     </div>
