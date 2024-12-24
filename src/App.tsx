@@ -19,6 +19,7 @@ const App: Component = () => {
   const [recentColors, setRecentColors] = createSignal<RGBA[]>(
     Array(3).fill({ r: 0, g: 0, b: 0, a: 0 })
   );
+  const [penMode, setPenMode] = createSignal<string>("Pen");
 
   function convertToRGBAString(rgba: RGBA): RGBAString {
     return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
@@ -26,7 +27,12 @@ const App: Component = () => {
 
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
-    cell.style.backgroundColor = convertToRGBAString(penColor());
+
+    if (penMode() === "Pen") {
+      cell.style.backgroundColor = convertToRGBAString(penColor());
+    } else if (penMode() === "Erase") {
+      cell.style.backgroundColor = "rgba(0, 0, 0, 0)";
+    }
 
     if (penColor() !== recentColors()[0]) {
       setRecentColors([penColor(), recentColors()[0], recentColors()[1]]);
@@ -76,6 +82,26 @@ const App: Component = () => {
             }}
             onclick={() => setPenColor(recentColors()[2])}
           ></div>
+        </div>
+        <div>
+          <input
+            type="radio"
+            name="pen-mode"
+            value="Pen"
+            id="pen-mode-pen"
+            checked={penMode() === "Pen"}
+            onchange={() => setPenMode("Pen")}
+          />
+          <label for="pen-mode-pen">Pen</label>
+          <input
+            type="radio"
+            name="pen-mode"
+            value="Erase"
+            id="pen-mode-erase"
+            checked={penMode() === "Erase"}
+            onchange={() => setPenMode("Erase")}
+          />
+          <label for="pen-mode-erase">Erase</label>
         </div>
       </div>
     </div>
