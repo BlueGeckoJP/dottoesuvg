@@ -1,12 +1,31 @@
 import styles from "./ColorPicker.module.css";
 
-import { Component, createSignal } from "solid-js";
+import {
+  Accessor,
+  Component,
+  createEffect,
+  createSignal,
+  Setter,
+} from "solid-js";
 
-const ColorPicker: Component = () => {
+type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
+
+function isRGBA(rgba: string): rgba is RGBA {
+  return /^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, \d(\.\d)?\)$/.test(rgba);
+}
+
+const ColorPicker: Component<{
+  penColor: Accessor<RGBA>;
+  setPenColor: Setter<RGBA>;
+}> = (props) => {
   const [red, setRed] = createSignal<number>(0);
   const [green, setGreen] = createSignal<number>(0);
   const [blue, setBlue] = createSignal<number>(0);
   const [alpha, setAlpha] = createSignal<number>(1);
+
+  createEffect(() => {
+    setRGBA(rgbToHex(red(), green(), blue()), alpha());
+  });
 
   function rgbToHex(r: number, g: number, b: number) {
     const toHex = (value: number) => {
@@ -23,6 +42,22 @@ const ColorPicker: Component = () => {
       setRed(parseInt(match[1], 16));
       setGreen(parseInt(match[2], 16));
       setBlue(parseInt(match[3], 16));
+    }
+  }
+
+  function setRGBA(hex: string, alpha: number) {
+    const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const rgba = rgb
+      ? `rgba(${parseInt(rgb[1], 16)}, ${parseInt(rgb[2], 16)}, ${parseInt(
+          rgb[3],
+          16
+        )}, ${alpha})`
+      : "rgba(0, 0, 0, 1)";
+
+    if (isRGBA(rgba)) {
+      props.setPenColor(rgba);
+
+      console.log("rgbaColor: ", props.penColor());
     }
   }
 

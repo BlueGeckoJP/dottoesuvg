@@ -1,6 +1,6 @@
 .top-container {
   display: flex;
-  width: 60vw;
+  width: 100vw;
   height: 100vh;
   margin: auto;
 }
@@ -55,8 +55,8 @@
       transparent 75%,
       #d3d3d3 75%
     );
-  background-position: 0 0, 17px 17px;
-  background-size: 34px 34px;
+  background-position: 0 0, 16px 16px;
+  background-size: 32px 32px;
   background-color: white;
 }
 
