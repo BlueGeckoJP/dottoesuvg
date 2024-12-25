@@ -1,14 +1,50 @@
-.red-container {
+.color-container {
+  display: flex;
+  width: 221px;
+  height: 32px;
+  margin-bottom: 8px;
+  border: 2px solid #333333;
+  border-radius: 10px;
+  padding-left: 16px;
 }
 
-.green-container {
+.color-input-number {
+  height: auto;
+  margin-left: 8px;
+  padding-left: 4px;
+  appearance: none;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: large;
+  text-align: center;
 }
 
-.blue-container {
-}
-
-.alpha-container {
+.color-input-number::-webkit-outer-spin-button,
+.color-input-number::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
 }
 
 .hex-code-container {
+  width: 221px;
+  height: 32px;
+  border: 2px solid #333333;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hex-code {
+  width: 140px;
+  height: 24px;
+  appearance: none;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: large;
+  text-align: center;
+  border: 2px solid #333333;
 }

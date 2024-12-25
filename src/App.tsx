@@ -2,13 +2,14 @@ import styles from "./App.module.css";
 
 import type { RGBA, RGBAString } from "./types";
 
-import { createSignal, type Component } from "solid-js";
+import { createEffect, createSignal, type Component } from "solid-js";
 
 import ColorPicker from "./components/ColorPicker";
 
 const App: Component = () => {
+  const [size, setSize] = createSignal<number>(8);
   const [colors, setColors] = createSignal<RGBAString[][]>(
-    Array.from({ length: 8 }, () => Array(8).fill("rgba(0, 0, 0, 0)"))
+    Array.from({ length: size() }, () => Array(size()).fill("rgba(0, 0, 0, 0)"))
   );
   const [penColor, setPenColor] = createSignal<RGBA>({
     r: 0,
@@ -49,8 +50,8 @@ const App: Component = () => {
   function onClickSaveToSVG() {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
-    svg.setAttribute("width", "8");
-    svg.setAttribute("height", "8");
+    svg.setAttribute("width", size().toString());
+    svg.setAttribute("height", size().toString());
 
     colors().forEach((row, ri) => {
       row.forEach((color, ci) => {
@@ -84,6 +85,14 @@ const App: Component = () => {
     downloadLink.click();
     document.body.removeChild(downloadLink);
   }
+
+  createEffect(() => {
+    setColors(
+      Array.from({ length: size() }, () =>
+        Array(size()).fill("rgba(0, 0, 0, 0)")
+      )
+    );
+  });
 
   return (
     <div class={styles["top-container"]}>
@@ -151,6 +160,13 @@ const App: Component = () => {
           <label for="pen-mode-erase">Erase</label>
         </div>
         <button onclick={onClickSaveToSVG}>Save To SVG</button>
+        <input
+          type="number"
+          min="1"
+          max="32"
+          value={size()}
+          onInput={(e) => setSize(parseInt(e.currentTarget.value))}
+        />
       </div>
     </div>
   );

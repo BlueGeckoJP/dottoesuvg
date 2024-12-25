@@ -25,7 +25,7 @@ const ColorPicker: Component<{
 
   return (
     <div>
-      <div class={styles["red-container"]}>
+      <div class={styles["color-container"]}>
         <input
           type="range"
           min="0"
@@ -49,9 +49,15 @@ const ColorPicker: Component<{
               r: parseInt(e.currentTarget.value),
             })
           }
+          class={styles["color-input-number"]}
+          style={{
+            "background-color": `rgba(255, ${255 - props.penColor().r}, ${
+              255 - props.penColor().r
+            }, 1)`,
+          }}
         />
       </div>
-      <div class={styles["green-container"]}>
+      <div class={styles["color-container"]}>
         <input
           type="range"
           min="0"
@@ -75,9 +81,15 @@ const ColorPicker: Component<{
               g: parseInt(e.currentTarget.value),
             })
           }
+          class={styles["color-input-number"]}
+          style={{
+            "background-color": `rgba(${255 - props.penColor().g}, 255, ${
+              255 - props.penColor().g
+            }, 1)`,
+          }}
         />
       </div>
-      <div class={styles["blue-container"]}>
+      <div class={styles["color-container"]}>
         <input
           type="range"
           min="0"
@@ -101,9 +113,15 @@ const ColorPicker: Component<{
               b: parseInt(e.currentTarget.value),
             })
           }
+          class={styles["color-input-number"]}
+          style={{
+            "background-color": `rgba(${255 - props.penColor().b}, ${
+              255 - props.penColor().b
+            }, 255, 1)`,
+          }}
         />
       </div>
-      <div class={styles["alpha-container"]}>
+      <div class={styles["color-container"]}>
         <input
           type="range"
           min="0"
@@ -129,13 +147,18 @@ const ColorPicker: Component<{
               a: parseFloat(e.currentTarget.value),
             })
           }
+          class={styles["color-input-number"]}
         />
       </div>
-      <div class={styles["hex-code-container"]}>
+      <div
+        class={styles["hex-code-container"]}
+        style={{ "background-color": rgbToHex() }}
+      >
         <input
           type="text"
           value={rgbToHex()}
-          onInput={(e) => setPenColorFromHex(e.currentTarget.value)}
+          onChange={(e) => setPenColorFromHex(e.currentTarget.value)}
+          class={styles["hex-code"]}
         />
       </div>
     </div>

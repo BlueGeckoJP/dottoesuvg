@@ -9,7 +9,6 @@
   border: 1px solid black;
   width: min-content;
   height: min-content;
-  margin-top: 16px;
 }
 
 .row {
@@ -23,9 +22,9 @@
 }
 
 .color-picker-container {
-  margin-top: 16px;
   padding: 8px;
-  width: 50%;
+  width: 30%;
+  border-left: 5px solid #5a5a5a;
 }
 
 .recent-colors {
@@ -66,5 +65,8 @@
   padding: 8px;
   display: flex;
   justify-content: center;
-  width: 50%;
+  align-items: center;
+  width: 70%;
+  background-color: #888888;
+  overflow: auto;
 }
