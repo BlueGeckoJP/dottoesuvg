@@ -8,7 +8,7 @@ import ColorPicker from "./components/ColorPicker";
 
 const App: Component = () => {
   const [colors, setColors] = createSignal<RGBAString[][]>(
-    Array.from({ length: 8 }, () => Array(8).fill("rgba(0, 0, 0, 0"))
+    Array.from({ length: 8 }, () => Array(8).fill("rgba(0, 0, 0, 0)"))
   );
   const [penColor, setPenColor] = createSignal<RGBA>({
     r: 0,
@@ -37,6 +37,17 @@ const App: Component = () => {
     if (penColor() !== recentColors()[0]) {
       setRecentColors([penColor(), recentColors()[0], recentColors()[1]]);
     }
+
+    setColors((c) => {
+      const [row, col] = cell.id.split("-").slice(1).map(Number);
+      const newColors = c.map((row) => row.slice());
+      newColors[row][col] = cell.style.backgroundColor as RGBAString;
+      return newColors;
+    });
+  }
+
+  function onClickSaveToSVG() {
+    console.log(colors());
   }
 
   return (
@@ -45,12 +56,13 @@ const App: Component = () => {
         <div
           class={`${styles["dot-canvas-grid"]} ${styles["checkered-background"]}`}
         >
-          {colors().map((colorsRow) => (
+          {colors().map((colorsRow, ri) => (
             <div class={styles.row}>
-              {colorsRow.map((color) => (
+              {colorsRow.map((color, ci) => (
                 <div
                   class={styles.cell}
                   style={{ "background-color": color }}
+                  id={`cell-${ri}-${ci}`}
                   onclick={onClickCell}
                 ></div>
               ))}
@@ -103,6 +115,7 @@ const App: Component = () => {
           />
           <label for="pen-mode-erase">Erase</label>
         </div>
+        <button onclick={onClickSaveToSVG}>Save To SVG</button>
       </div>
     </div>
   );
