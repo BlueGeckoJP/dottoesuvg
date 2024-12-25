@@ -47,7 +47,42 @@ const App: Component = () => {
   }
 
   function onClickSaveToSVG() {
-    console.log(colors());
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+    svg.setAttribute("width", "8");
+    svg.setAttribute("height", "8");
+
+    colors().forEach((row, ri) => {
+      row.forEach((color, ci) => {
+        if (color !== "rgba(0, 0, 0, 0)") {
+          const rect = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect"
+          );
+
+          rect.setAttribute("x", String(ci));
+          rect.setAttribute("y", String(ri));
+          rect.setAttribute("width", "1");
+          rect.setAttribute("height", "1");
+          rect.setAttribute("fill", color);
+
+          svg.appendChild(rect);
+        }
+      });
+    });
+
+    const serializer = new XMLSerializer();
+    const svgData = serializer.serializeToString(svg);
+    const svgBlob = new Blob([svgData], {
+      type: "image/svg+xml;charset=utf-8",
+    });
+    const svgUrl = URL.createObjectURL(svgBlob);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = svgUrl;
+    downloadLink.download = "pixel-art.svg";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 
   return (
