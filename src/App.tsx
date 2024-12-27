@@ -195,13 +195,17 @@ const App: Component = () => {
             </span>
             <span class={styles["stg-string"]}>Save To SVG</span>
           </div>
-          <input
-            type="number"
-            min="1"
-            max="32"
-            value={size()}
-            onInput={(e) => setSize(parseInt(e.currentTarget.value))}
-          />
+          <div>
+            <span class={styles["canvas-size-string"]}>Canvas Size: </span>
+            <input
+              type="number"
+              min="1"
+              max="32"
+              value={size()}
+              onInput={(e) => setSize(parseInt(e.currentTarget.value))}
+              class={styles["canvas-size-input"]}
+            />
+          </div>
         </div>
       </div>
     </div>

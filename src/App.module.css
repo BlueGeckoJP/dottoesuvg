@@ -104,6 +104,7 @@
   border: 2px solid #333333;
   border-radius: 15px;
   overflow: hidden;
+  margin-bottom: 8px;
 }
 
 .stg-floppy {
@@ -117,4 +118,26 @@
   padding-left: 8px;
   padding-right: 8px;
   color: white;
+}
+
+.canvas-size-string {
+  color: white;
+}
+
+.canvas-size-input {
+  height: auto;
+  margin-left: 8px;
+  padding-left: 4px;
+  appearance: none;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: large;
+  text-align: center;
+}
+
+.canvas-size-input::-webkit-outer-spin-button,
+.canvas-size-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
 }
