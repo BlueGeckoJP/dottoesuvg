@@ -6,3 +6,8 @@ export type RGBA = {
 };
 
 export type RGBAString = `rgba(${number}, ${number}, ${number}, ${number})`;
+
+export enum PenMode {
+  Pen,
+  Eraser,
+}

@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 
-import type { RGBA, RGBAString } from "./types";
+import { PenMode, RGBA, RGBAString } from "./types";
 
 import { createEffect, createSignal, type Component } from "solid-js";
 import { Fa } from "solid-fa";
@@ -26,7 +26,7 @@ const App: Component = () => {
   const [recentColors, setRecentColors] = createSignal<RGBA[]>(
     Array(3).fill({ r: 0, g: 0, b: 0, a: 0 })
   );
-  const [penMode, setPenMode] = createSignal<string>("Pen");
+  const [penMode, setPenMode] = createSignal<PenMode>(PenMode.Pen);
 
   function convertToRGBAString(rgba: RGBA): RGBAString {
     return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
@@ -35,9 +35,9 @@ const App: Component = () => {
   function onClickCell(me: MouseEvent) {
     const cell = me.target as HTMLElement;
 
-    if (penMode() === "Pen") {
+    if (penMode() === PenMode.Pen) {
       cell.style.backgroundColor = convertToRGBAString(penColor());
-    } else if (penMode() === "Erase") {
+    } else if (penMode() === PenMode.Eraser) {
       cell.style.backgroundColor = "rgba(0, 0, 0, 0)";
     }
 
@@ -150,17 +150,17 @@ const App: Component = () => {
         <div class={styles["pen-mode-container"]}>
           <div
             class={styles["pen-mode"]}
-            onclick={() => setPenMode("Pen")}
+            onclick={() => setPenMode(PenMode.Pen)}
             style={{
               "background-color": `${
-                penMode() === "Pen" ? "white" : "transparent"
+                penMode() === PenMode.Pen ? "white" : "transparent"
               }`,
             }}
           >
             <span
               style={{
                 "font-size": "30px",
-                color: `${penMode() === "Pen" ? "#3080DE" : "white"}`,
+                color: `${penMode() === PenMode.Pen ? "#3080DE" : "white"}`,
               }}
             >
               <Fa icon={faPen} />
@@ -168,17 +168,17 @@ const App: Component = () => {
           </div>
           <div
             class={styles["pen-mode"]}
-            onclick={() => setPenMode("Erase")}
+            onclick={() => setPenMode(PenMode.Eraser)}
             style={{
               "background-color": `${
-                penMode() === "Erase" ? "white" : "transparent"
+                penMode() === PenMode.Eraser ? "white" : "transparent"
               }`,
             }}
           >
             <span
               style={{
                 "font-size": "30px",
-                color: `${penMode() === "Erase" ? "#3080DE" : "white"}`,
+                color: `${penMode() === PenMode.Eraser ? "#3080DE" : "white"}`,
               }}
             >
               <Fa icon={faEraser} />
