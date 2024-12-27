@@ -3,6 +3,8 @@ import styles from "./App.module.css";
 import type { RGBA, RGBAString } from "./types";
 
 import { createEffect, createSignal, type Component } from "solid-js";
+import { Fa } from "solid-fa";
+import { faPen, faEraser } from "@fortawesome/free-solid-svg-icons";
 
 import ColorPicker from "./components/ColorPicker";
 
@@ -116,7 +118,9 @@ const App: Component = () => {
       </div>
       <div class={styles["color-picker-container"]}>
         <ColorPicker penColor={penColor} setPenColor={setPenColor} />
-        <div class={styles["recent-colors-container"]}>
+        <div
+          class={`${styles["recent-colors-container"]} ${styles["checkered-background"]}`}
+        >
           <div
             class={styles["recent-colors"]}
             style={{
@@ -139,25 +143,43 @@ const App: Component = () => {
             onclick={() => setPenColor(recentColors()[2])}
           ></div>
         </div>
-        <div>
-          <input
-            type="radio"
-            name="pen-mode"
-            value="Pen"
-            id="pen-mode-pen"
-            checked={penMode() === "Pen"}
-            onchange={() => setPenMode("Pen")}
-          />
-          <label for="pen-mode-pen">Pen</label>
-          <input
-            type="radio"
-            name="pen-mode"
-            value="Erase"
-            id="pen-mode-erase"
-            checked={penMode() === "Erase"}
-            onchange={() => setPenMode("Erase")}
-          />
-          <label for="pen-mode-erase">Erase</label>
+        <div class={styles["pen-mode-container"]}>
+          <div
+            class={styles["pen-mode"]}
+            onclick={() => setPenMode("Pen")}
+            style={{
+              "background-color": `${
+                penMode() === "Pen" ? "white" : "transparent"
+              }`,
+            }}
+          >
+            <span
+              style={{
+                "font-size": "30px",
+                color: `${penMode() === "Pen" ? "#3080DE" : "white"}`,
+              }}
+            >
+              <Fa icon={faPen} />
+            </span>
+          </div>
+          <div
+            class={styles["pen-mode"]}
+            onclick={() => setPenMode("Erase")}
+            style={{
+              "background-color": `${
+                penMode() === "Erase" ? "white" : "transparent"
+              }`,
+            }}
+          >
+            <span
+              style={{
+                "font-size": "30px",
+                color: `${penMode() === "Erase" ? "#3080DE" : "white"}`,
+              }}
+            >
+              <Fa icon={faEraser} />
+            </span>
+          </div>
         </div>
         <button onclick={onClickSaveToSVG}>Save To SVG</button>
         <input
