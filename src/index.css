@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap");
+
 html,
 body {
   margin: 0;
@@ -6,4 +8,9 @@ body {
 
 * {
   box-sizing: border-box;
+
+  font-family: "Nunito", serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
 }

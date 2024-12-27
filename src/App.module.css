@@ -25,6 +25,7 @@
   padding: 8px;
   width: 30%;
   border-left: 5px solid #5a5a5a;
+  position: relative;
 }
 
 .recent-colors {
@@ -87,4 +88,33 @@
   align-items: center;
   margin: 8px 8px 8px 0;
   border-radius: 15px;
+}
+
+.bottom-container {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 8px;
+}
+
+.save-to-svg {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  height: 32px;
+  border: 2px solid #333333;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.stg-floppy {
+  background-color: #3080de;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-right: 2px solid #333333;
+}
+
+.stg-string {
+  padding-left: 8px;
+  padding-right: 8px;
+  color: white;
 }

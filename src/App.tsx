@@ -4,7 +4,11 @@ import type { RGBA, RGBAString } from "./types";
 
 import { createEffect, createSignal, type Component } from "solid-js";
 import { Fa } from "solid-fa";
-import { faPen, faEraser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faEraser,
+  faFloppyDisk,
+} from "@fortawesome/free-solid-svg-icons";
 
 import ColorPicker from "./components/ColorPicker";
 
@@ -181,14 +185,24 @@ const App: Component = () => {
             </span>
           </div>
         </div>
-        <button onclick={onClickSaveToSVG}>Save To SVG</button>
-        <input
-          type="number"
-          min="1"
-          max="32"
-          value={size()}
-          onInput={(e) => setSize(parseInt(e.currentTarget.value))}
-        />
+        <div class={styles["bottom-container"]}>
+          <div class={styles["save-to-svg"]} onclick={onClickSaveToSVG}>
+            <span
+              class={styles["stg-floppy"]}
+              style={{ "font-size": "24px", color: "white" }}
+            >
+              <Fa icon={faFloppyDisk} />
+            </span>
+            <span class={styles["stg-string"]}>Save To SVG</span>
+          </div>
+          <input
+            type="number"
+            min="1"
+            max="32"
+            value={size()}
+            onInput={(e) => setSize(parseInt(e.currentTarget.value))}
+          />
+        </div>
       </div>
     </div>
   );
